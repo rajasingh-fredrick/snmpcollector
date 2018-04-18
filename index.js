@@ -1,3 +1,4 @@
+var qs = require('querystring');
 var express = require('express')
 var app = express()
 
@@ -11,6 +12,30 @@ app.get('/', function(request, response) {
 app.get('/index', function(request, response) {
   response.send('Hello World Rajasingh!')
 })
+
+app.get('/device', function(request, response) {
+	
+	if (request.method == 'GET') {
+        var body = '';
+
+        request.on('data', function (data) {
+            body += data;
+
+            // Too much POST data, kill the connection!
+            // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+            if (body.length > 1e6)
+                request.connection.destroy();
+        });
+
+        request.on('end', function () {
+            var post = qs.parse(body);
+            response.send(post['username']);
+            // use post['blah'], etc.
+        });
+    }
+	
+})
+
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'))
