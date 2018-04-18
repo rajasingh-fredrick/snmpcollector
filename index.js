@@ -36,7 +36,7 @@ app.get('/device', function(request, response) {
 	else {
 		var queryData = url.parse(request.url, true).query;
 		
-		console.log(queryData);
+		console.log(queryData + req.query.username);
 		  response.writeHead(200, {"Content-Type": "text/plain"});
 
 		  if (queryData.username) {
