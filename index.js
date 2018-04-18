@@ -35,14 +35,16 @@ app.get('/device', function(request, response) {
     }
 	else {
 		var queryData = url.parse(request.url, true).query;
+		
+		console.log(queryData);
 		  response.writeHead(200, {"Content-Type": "text/plain"});
 
 		  if (queryData.username) {
 		    // user told us their name in the GET request, ex: http://host:8000/?name=Tom
-		    response.end('Hello ' + queryData.username + '\n');
+		    response.send('Hello ' + queryData.username + '\n');
 
 		  } else {
-		    response.end("Hello World\n");
+		    response.send("Hello World\n");
 		  }
 	}
 	
